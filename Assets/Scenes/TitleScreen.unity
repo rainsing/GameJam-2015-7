@@ -351,6 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgImage: {fileID: 633603539}
+  titleTexture: {fileID: 21300000, guid: 254be30939325ac4dad50579be02e03b, type: 3}
   introTexture: {fileID: 21300000, guid: 05e6dbe784ef5384d8c0a2ac86f95fa9, type: 3}
 --- !u!4 &1255998849
 Transform:
