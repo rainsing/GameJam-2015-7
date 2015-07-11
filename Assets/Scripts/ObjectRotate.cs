@@ -12,7 +12,6 @@ public class ObjectRotate : MonoBehaviour
 	public bool _IsRotating = false;
 	public float _RotateSpeed = 10;
 
-	public Transform _ObjTrans;
 	// Use this for initialization
 	void Start () 
 	{
@@ -24,7 +23,7 @@ public class ObjectRotate : MonoBehaviour
 	{
 		ScrollWheel();
 
-		RotateView();
+		//RotateView();
 	}
 
 	void ScrollWheel()
