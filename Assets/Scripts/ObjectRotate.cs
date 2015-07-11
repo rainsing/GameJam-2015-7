@@ -23,7 +23,7 @@ public class ObjectRotate : MonoBehaviour
 	{
 		ScrollWheel();
 
-		//RotateView();
+		RotateView();
 	}
 
 	void ScrollWheel()
