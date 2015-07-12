@@ -29,7 +29,7 @@ public class chooseItem : MonoBehaviour
 	private GameObject _MidItem;
 
 	public int _CurItemGroupIndex = 0;
-	private int _TotalItemGroupIndex = 3;
+	public int _TotalItemGroupIndex = 2;
 
 	public GameObject _RightResult;
 	public GameObject _WrongResult;
@@ -51,13 +51,13 @@ public class chooseItem : MonoBehaviour
 
 	void Clear()
 	{
-//		for(int i = _ItemList.Count-1; i>=0; i--)
-//		{
-//			Destroy(_ItemList[i]);
-//
-//		}
-//
-//		_ItemList.Clear();
+		for(int i = _ItemList.Count-1; i>=0; i--)
+		{
+			Destroy(_ItemList[i]);
+
+		}
+
+		_ItemList.Clear();
 
 		for(int i = _ResultList.Count-1; i>=0; i--)
 		{
@@ -72,12 +72,13 @@ public class chooseItem : MonoBehaviour
 	{
 		Clear();
 
-//		for(int i = 0; i < 4; i++)
-//		{
-//			GameObject o = GameObject.Instantiate(_ItemPrefabList[_CurItemGroupIndex*4 + i], _PosList[i].transform.position, Quaternion.identity) as GameObject;
-//			o.AddComponent<MeshCollider>();
-//			_ItemList.Add(o);
-//		}
+		for(int i = 0; i < 4; i++)
+		{
+			GameObject o = GameObject.Instantiate(_ItemPrefabList[_CurItemGroupIndex*4 + i], _PosList[i].transform.position, Quaternion.identity) as GameObject;
+			o.AddComponent<MeshCollider>();
+			o.name = _ItemPrefabList[_CurItemGroupIndex*4 + i].name;
+			_ItemList.Add(o);
+		}
 
 		int radomIndex = Random.Range(_CurItemGroupIndex*4, _CurItemGroupIndex*4 + 4);
 
@@ -88,6 +89,13 @@ public class chooseItem : MonoBehaviour
 		_MidItem.transform.position = new Vector3(_MidItem.transform.position.x, -1.97f, _MidItem.transform.position.z);
 		_MidItem.GetComponent<MeshRenderer>().material = _Material;
 		_MidItem.name = _ItemPrefabList[radomIndex].name;
+
+		float randomAngle = Random.Range(-30.0f,30.0f);
+		_MidItem.transform.Rotate(new Vector3(0,0,randomAngle));
+
+		_RefBox.transform.rotation = Quaternion.identity;
+		_RefBox.transform.Rotate(new Vector3(0,0,randomAngle));
+
 		_AnswerObject = _MidItem;
 	}
 
@@ -117,7 +125,7 @@ public class chooseItem : MonoBehaviour
 			{
 				if(Input.anyKeyDown)
 				{
-					_CurItemGroupIndex = 0;
+					_CurItemGroupIndex = (_CurItemGroupIndex+1)%_TotalItemGroupIndex;
 					Init();
 					
 					_CurGameState = EGameState.GamePlaying;
