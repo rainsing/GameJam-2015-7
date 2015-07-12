@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public enum EGameState
 {
@@ -19,12 +20,22 @@ public class chooseItem : MonoBehaviour
 
 	private EGameState _CurGameState;
 
-	public Image _AnswerRightUI;
+
+	public List<GameObject> _ItemPrefabList = new List<GameObject>(); 
+	public List<GameObject> _PosList = new List<GameObject>();
+
+	private List<GameObject> _ItemList = new List<GameObject>();
+
+	public int _CurItemGroupIndex = 0;
+	private int _TotalItemGroupIndex = 3;
+
 
 	void Start()
 	{
 		_AnswerObject = GameObject.FindGameObjectWithTag("Answer");
 		_CurGameState = EGameState.GameStart;
+
+
 	}
 
 	void Update()
