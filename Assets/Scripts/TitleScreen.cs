@@ -11,8 +11,7 @@ public class TitleScreen : MonoBehaviour
 	private enum MyScreen
 	{
 		SCREEN_LOGO,
-		SCREEN_TITLE,
-		SCREEN_INTRO
+		SCREEN_TITLE
 	}
 
 	private MyScreen m_CurrentScreen = MyScreen.SCREEN_LOGO;
@@ -29,12 +28,7 @@ public class TitleScreen : MonoBehaviour
 				break;
 
 			case MyScreen.SCREEN_TITLE:
-				bgImage.sprite = introTexture;
-				m_CurrentScreen = MyScreen.SCREEN_INTRO;
-				break;
-			
-			case MyScreen.SCREEN_INTRO:
-				Debug.Log("Load the main level now!");
+				Application.LoadLevel("wall");
 				break;
 			}
 		}
