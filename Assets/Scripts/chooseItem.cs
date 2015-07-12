@@ -1,18 +1,64 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using System.Collections.Generic;
+
+public enum EGameState
+{
+	GameStart,
+	GamePlaying,
+	GameResult,
+}
 
 public class chooseItem : MonoBehaviour 
 {
 	public GameObject _ItemRoot;
-
-	//private GameObject _SelectedItem;
-
 	public Vector3 RotateSpeed;
 	public RuntimeAnimatorController _AnimController;
 
-	//private GameObject _HoverItem;
+	public GameObject _AnswerObject;
+
+	private EGameState _CurGameState;
+
+
+	public List<GameObject> _ItemPrefabList = new List<GameObject>(); 
+	public List<GameObject> _PosList = new List<GameObject>();
+
+	private List<GameObject> _ItemList = new List<GameObject>();
+
+	public int _CurItemGroupIndex = 0;
+	private int _TotalItemGroupIndex = 3;
+
+
+	void Start()
+	{
+		_AnswerObject = GameObject.FindGameObjectWithTag("Answer");
+		_CurGameState = EGameState.GameStart;
+
+
+	}
 
 	void Update()
+	{
+
+
+		switch(_CurGameState)
+		{
+		case EGameState.GameStart:
+			CheckItemClick();
+			break;
+		case EGameState.GamePlaying:
+			CheckItemClick();
+			break;
+		case EGameState.GameResult:
+			CheckItemClick();
+			break;
+		}
+
+
+	}
+
+	void CheckItemClick()
 	{
 		GameObject _SelectedItem = null;
 		GameObject _HoveredItem = null;
@@ -26,24 +72,25 @@ public class chooseItem : MonoBehaviour
 				_HoveredItem = hit.collider.gameObject;
 			}
 		}
-
+		
 		if (Input.GetMouseButton (0))
 		{
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit))
 			{
-				Debug.DrawLine (ray.origin, hit.point);
-				print(hit.collider.gameObject.name);
-			
+				//Debug.DrawLine (ray.origin, hit.point);
+				//print(hit.collider.gameObject.name);
+				
 				_SelectedItem = hit.collider.gameObject;
+				SelectItem(hit.collider.gameObject);
 			}
 		}
 		else
 		{
 			_SelectedItem = null;
 		}
-
+		
 		Transform[] transList = _ItemRoot.GetComponentsInChildren<Transform>();
 		foreach(Transform t in transList)
 		{
@@ -51,7 +98,7 @@ public class chooseItem : MonoBehaviour
 			{
 				continue;
 			}
-
+			
 			if(_SelectedItem == null)
 			{
 				if(t.gameObject == _HoveredItem)
@@ -68,12 +115,12 @@ public class chooseItem : MonoBehaviour
 			{
 				//show select effect
 				//Debug.Log(t.gameObject.name);
-
-
+				
+				
 				Animator anim = t.gameObject.GetComponent<Animator>();
 				if(_SelectedItem == t.gameObject)
 				{
-					Debug.Log("t.gameObject.name="+t.gameObject.name+", set anim");
+					//Debug.Log("t.gameObject.name="+t.gameObject.name+", set anim");
 					anim.runtimeAnimatorController = _AnimController;
 					anim.Play("FlippingBottle");
 				}
@@ -81,12 +128,27 @@ public class chooseItem : MonoBehaviour
 				{
 					anim.runtimeAnimatorController = null;
 				}
-
+				
 			}
 		}
 	}
 
-	void ShowHoverEffect()
+
+
+	void SelectItem(GameObject o)
 	{
+		Debug.Log("_AnswerObject.name="+_AnswerObject.name+", SelectItem.name="+o.name+"!");
+
+		//if(o.name.Equals(_AnswerObject.name) == true)
+		if(_AnswerObject.name == o.name)
+		{
+			Debug.Log("Answer Is Right");
+		}
+		else
+		{
+			Debug.Log("Answer Is wrong");
+		}
+
+		_CurGameState = EGameState.GameResult;
 	}
 }
