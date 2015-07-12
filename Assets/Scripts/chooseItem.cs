@@ -51,13 +51,13 @@ public class chooseItem : MonoBehaviour
 
 	void Clear()
 	{
-		for(int i = _ItemList.Count-1; i>=0; i--)
-		{
-			Destroy(_ItemList[i]);
-
-		}
-
-		_ItemList.Clear();
+//		for(int i = _ItemList.Count-1; i>=0; i--)
+//		{
+//			Destroy(_ItemList[i]);
+//
+//		}
+//
+//		_ItemList.Clear();
 
 		for(int i = _ResultList.Count-1; i>=0; i--)
 		{
@@ -72,12 +72,12 @@ public class chooseItem : MonoBehaviour
 	{
 		Clear();
 
-		for(int i = 0; i < 4; i++)
-		{
-			GameObject o = GameObject.Instantiate(_ItemPrefabList[_CurItemGroupIndex*4 + i], _PosList[i].transform.position, Quaternion.identity) as GameObject;
-			o.AddComponent<MeshCollider>();
-			_ItemList.Add(o);
-		}
+//		for(int i = 0; i < 4; i++)
+//		{
+//			GameObject o = GameObject.Instantiate(_ItemPrefabList[_CurItemGroupIndex*4 + i], _PosList[i].transform.position, Quaternion.identity) as GameObject;
+//			o.AddComponent<MeshCollider>();
+//			_ItemList.Add(o);
+//		}
 
 		int radomIndex = Random.Range(_CurItemGroupIndex*4, _CurItemGroupIndex*4 + 4);
 
@@ -87,38 +87,50 @@ public class chooseItem : MonoBehaviour
 		_MidItem.transform.localScale = new Vector3(2,2,2);
 		_MidItem.transform.position = new Vector3(_MidItem.transform.position.x, -1.97f, _MidItem.transform.position.z);
 		_MidItem.GetComponent<MeshRenderer>().material = _Material;
+		_MidItem.name = _ItemPrefabList[radomIndex].name;
 		_AnswerObject = _MidItem;
 	}
 
+	private float cdTime = 0.0f;
+	private float curCDTime = 0;
 	void Update()
 	{
-
-
 		switch(_CurGameState)
 		{
 		case EGameState.GameStart:
 			CheckItemClick();
 			break;
 		case EGameState.GamePlaying:
-			CheckItemClick();
+		{
+			if(curCDTime < cdTime)
+			{
+				curCDTime += Time.deltaTime;
+			}
+			else{
+				CheckItemClick();
+			}
+
+
 			break;
+		}
 		case EGameState.GameResult:
 			{
 				if(Input.anyKeyDown)
 				{
 					_CurItemGroupIndex = 0;
 					Init();
-
+					
 					_CurGameState = EGameState.GamePlaying;
+
+					cdTime = 1.0f;
+					curCDTime = 0;
 				}
+				break;
 			}
-			//CheckItemClick();
-			break;
 		}
-
-
 	}
 
+	
 	void CheckItemClick()
 	{
 		GameObject _SelectedItem = null;
