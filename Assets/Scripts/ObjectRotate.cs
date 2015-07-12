@@ -4,6 +4,9 @@ using UnityEngine.UI;
 
 public class ObjectRotate : MonoBehaviour 
 {
+	public bool _CanUpAndDown = true;
+	public bool _CanRotate = false;
+
 	public float _WheelSpeed = 10.0f;
 	public float _MaxY = 10;
 	public float _MinY = -10;
@@ -21,9 +24,15 @@ public class ObjectRotate : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		ScrollWheel();
+		if(_CanUpAndDown)
+		{
+			ScrollWheel();
+		}
 
-		RotateView();
+		if(_CanRotate)
+		{
+			RotateView();
+		}
 	}
 
 	void ScrollWheel()
@@ -66,7 +75,8 @@ public class ObjectRotate : MonoBehaviour
 		
 		if(_IsRotating)
 		{
-			transform.Rotate(Input.GetAxis("Mouse X") * _RotateSpeed, 0,  Input.GetAxis("Mouse Y") * _RotateSpeed);
+			//transform.Rotate(Input.GetAxis("Mouse X") * _RotateSpeed, 0,  Input.GetAxis("Mouse Y") * _RotateSpeed);
+			transform.Rotate(0, 0,  Input.GetAxis("Mouse Y") * _RotateSpeed);
 		}
 
 	}
