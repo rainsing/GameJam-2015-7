@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public enum EGameState
 {
@@ -17,6 +18,8 @@ public class chooseItem : MonoBehaviour
 	public GameObject _AnswerObject;
 
 	private EGameState _CurGameState;
+
+	public Image _AnswerRightUI;
 
 	void Start()
 	{
