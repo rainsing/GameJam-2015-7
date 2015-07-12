@@ -23,19 +23,71 @@ public class chooseItem : MonoBehaviour
 
 	public List<GameObject> _ItemPrefabList = new List<GameObject>(); 
 	public List<GameObject> _PosList = new List<GameObject>();
+	public Transform _MidPos;
 
-	private List<GameObject> _ItemList = new List<GameObject>();
+	public List<GameObject> _ItemList = new List<GameObject>();
+	private GameObject _MidItem;
 
 	public int _CurItemGroupIndex = 0;
 	private int _TotalItemGroupIndex = 3;
 
+	public GameObject _RightResult;
+	public GameObject _WrongResult;
+
+	private List<GameObject> _ResultList = new List<GameObject>();
+	public GameObject _RefBox;
+
+	public Material _Material;
 
 	void Start()
 	{
-		_AnswerObject = GameObject.FindGameObjectWithTag("Answer");
+
 		_CurGameState = EGameState.GameStart;
 
+		Init();
+	}
 
+
+
+	void Clear()
+	{
+		for(int i = _ItemList.Count-1; i>=0; i--)
+		{
+			Destroy(_ItemList[i]);
+
+		}
+
+		_ItemList.Clear();
+
+		for(int i = _ResultList.Count-1; i>=0; i--)
+		{
+			Destroy(_ResultList[i]);
+			
+		}
+		
+		_ResultList.Clear();
+	}
+
+	void Init()
+	{
+		Clear();
+
+		for(int i = 0; i < 4; i++)
+		{
+			GameObject o = GameObject.Instantiate(_ItemPrefabList[_CurItemGroupIndex*4 + i], _PosList[i].transform.position, Quaternion.identity) as GameObject;
+			o.AddComponent<MeshCollider>();
+			_ItemList.Add(o);
+		}
+
+		int radomIndex = Random.Range(_CurItemGroupIndex*4, _CurItemGroupIndex*4 + 4);
+
+		Destroy(_MidItem);
+
+		_MidItem = GameObject.Instantiate(_ItemPrefabList[radomIndex], _MidPos.position, Quaternion.identity) as GameObject;
+		_MidItem.transform.localScale = new Vector3(2,2,2);
+		_MidItem.transform.position = new Vector3(_MidItem.transform.position.x, -1.97f, _MidItem.transform.position.z);
+		_MidItem.GetComponent<MeshRenderer>().material = _Material;
+		_AnswerObject = _MidItem;
 	}
 
 	void Update()
@@ -51,7 +103,16 @@ public class chooseItem : MonoBehaviour
 			CheckItemClick();
 			break;
 		case EGameState.GameResult:
-			CheckItemClick();
+			{
+				if(Input.anyKeyDown)
+				{
+					_CurItemGroupIndex = 0;
+					Init();
+
+					_CurGameState = EGameState.GamePlaying;
+				}
+			}
+			//CheckItemClick();
 			break;
 		}
 
@@ -79,9 +140,6 @@ public class chooseItem : MonoBehaviour
 			RaycastHit hit;
 			if (Physics.Raycast (ray, out hit))
 			{
-				//Debug.DrawLine (ray.origin, hit.point);
-				//print(hit.collider.gameObject.name);
-				
 				_SelectedItem = hit.collider.gameObject;
 				SelectItem(hit.collider.gameObject);
 			}
@@ -91,17 +149,12 @@ public class chooseItem : MonoBehaviour
 			_SelectedItem = null;
 		}
 		
-		Transform[] transList = _ItemRoot.GetComponentsInChildren<Transform>();
-		foreach(Transform t in transList)
+		//Transform[] transList = _ItemRoot.GetComponentsInChildren<Transform>();
+		foreach(GameObject t in _ItemList)
 		{
-			if(t.gameObject.name == _ItemRoot.name)
-			{
-				continue;
-			}
-			
 			if(_SelectedItem == null)
 			{
-				if(t.gameObject == _HoveredItem)
+				if(t == _HoveredItem)
 				{
 					t.transform.Rotate(RotateSpeed);
 					t.transform.localScale = new Vector3(1.2f,1.2f,1.2f);
@@ -117,12 +170,12 @@ public class chooseItem : MonoBehaviour
 				//Debug.Log(t.gameObject.name);
 				
 				
-				Animator anim = t.gameObject.GetComponent<Animator>();
-				if(_SelectedItem == t.gameObject)
+				Animator anim = t.GetComponent<Animator>();
+				if(_SelectedItem == t)
 				{
 					//Debug.Log("t.gameObject.name="+t.gameObject.name+", set anim");
 					anim.runtimeAnimatorController = _AnimController;
-					anim.Play("FlippingBottle");
+					//anim.Play("FlippingBottle");
 				}
 				else
 				{
@@ -132,8 +185,6 @@ public class chooseItem : MonoBehaviour
 			}
 		}
 	}
-
-
 
 	void SelectItem(GameObject o)
 	{
@@ -149,6 +200,27 @@ public class chooseItem : MonoBehaviour
 			Debug.Log("Answer Is wrong");
 		}
 
+		//show all result
+		foreach(GameObject item in _ItemList)
+		{
+			if(item.name == _AnswerObject.name)
+			{
+				GameObject result =  GameObject.Instantiate(_RightResult, item.transform.position, _RightResult.transform.rotation) as GameObject;
+
+				result.transform.position = new Vector3(result.transform.position.x, result.transform.position.y, -14.7f);
+
+				_ResultList.Add(result);
+			}
+			else
+			{
+				GameObject result =  GameObject.Instantiate(_WrongResult, item.transform.position, _WrongResult.transform.rotation) as GameObject;
+
+				result.transform.position = new Vector3(result.transform.position.x, result.transform.position.y, -14.7f);
+
+				_ResultList.Add(result);
+			}
+		}
+		
 		_CurGameState = EGameState.GameResult;
 	}
 }
