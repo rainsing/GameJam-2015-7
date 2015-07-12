@@ -8,6 +8,7 @@ public class chooseItem : MonoBehaviour
 	//private GameObject _SelectedItem;
 
 	public Vector3 RotateSpeed;
+	public RuntimeAnimatorController _AnimController;
 
 	//private GameObject _HoverItem;
 
@@ -46,6 +47,11 @@ public class chooseItem : MonoBehaviour
 		Transform[] transList = _ItemRoot.GetComponentsInChildren<Transform>();
 		foreach(Transform t in transList)
 		{
+			if(t.gameObject.name == _ItemRoot.name)
+			{
+				continue;
+			}
+
 			if(_SelectedItem == null)
 			{
 				if(t.gameObject == _HoveredItem)
@@ -61,6 +67,21 @@ public class chooseItem : MonoBehaviour
 			else
 			{
 				//show select effect
+				//Debug.Log(t.gameObject.name);
+
+
+				Animator anim = t.gameObject.GetComponent<Animator>();
+				if(_SelectedItem == t.gameObject)
+				{
+					Debug.Log("t.gameObject.name="+t.gameObject.name+", set anim");
+					anim.runtimeAnimatorController = _AnimController;
+					anim.Play("FlippingBottle");
+				}
+				else
+				{
+					anim.runtimeAnimatorController = null;
+				}
+
 			}
 		}
 	}

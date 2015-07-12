@@ -505,6 +505,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ItemRoot: {fileID: 2085488699}
   RotateSpeed: {x: 0, y: 10, z: 0}
+  _AnimController: {fileID: 9100000, guid: d914274686a8f4fd2aa82aa4bf9ce966, type: 2}
 --- !u!1 &735972889
 GameObject:
   m_ObjectHideFlags: 0
@@ -809,6 +810,10 @@ Prefab:
     - target: {fileID: 400000, guid: 37c51257245980c47a88dac1b94b3086, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 37c51257245980c47a88dac1b94b3086, type: 3}
+      propertyPath: m_Controller
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 37c51257245980c47a88dac1b94b3086, type: 3}
