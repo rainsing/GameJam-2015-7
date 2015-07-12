@@ -160,7 +160,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
 --- !u!1 &259512282 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 9afe3695b612d40489ddec56cc0d512a, type: 3}
@@ -429,7 +429,7 @@ Transform:
   - {fileID: 950370565}
   - {fileID: 1690587722}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
 --- !u!1 &593235127
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,7 +460,7 @@ RectTransform:
   m_Children:
   - {fileID: 524110214}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -547,7 +547,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
 --- !u!114 &609968769
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -901,7 +901,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 39625a33c5e304a4e8d2a17ae170b1d4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.78100002
+      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 39625a33c5e304a4e8d2a17ae170b1d4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -943,7 +943,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 37c51257245980c47a88dac1b94b3086, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -.308999985
+      value: .0599999987
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 37c51257245980c47a88dac1b94b3086, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1365,7 +1365,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 400000, guid: 9afe3695b612d40489ddec56cc0d512a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.72000003
+      value: 1.26400006
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 9afe3695b612d40489ddec56cc0d512a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1553,4 +1553,4 @@ Transform:
   - {fileID: 1754933398}
   - {fileID: 980808080}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
